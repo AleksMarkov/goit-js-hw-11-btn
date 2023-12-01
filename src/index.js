@@ -13,7 +13,7 @@ const refs = {
 const { form, gallery, btn } = refs;
 const perPage = 40;
 let searchTerm = '';
-let page = 0;
+let page = 1;
 const param1 = {
   position: 'top-right',
   timeout: 3000,
@@ -24,19 +24,25 @@ const param1 = {
 form.addEventListener('submit', onSubmit);
 
 function onSubmit(event) {
+  // console.dir(event);
+  // console.log(event);
   event.preventDefault();
-  page = 0;
+  page = 1;
+  // console.log('gallery ', gallery, ', page ', page);
+  // console.log(event.currentTarget.searchQuery.value);
   gallery.innerHTML = '';
+  // console.log(event.currentTarget);
   searchTerm = event.currentTarget.searchQuery.value.trim().toLowerCase();
   if (searchTerm === '') {
     Notiflix.Notify.info('Enter your request, please!', param1);
     return;
   }
-  page += 1;
+
   window.removeEventListener('scroll', nextPage);
 
   searchImg(searchTerm, page, perPage)
     .then(data => {
+      console.log(data);
       const results = data.hits;
       if (data.totalHits === 0) {
         Notiflix.Notify.failure(
