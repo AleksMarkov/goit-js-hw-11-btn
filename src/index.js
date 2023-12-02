@@ -24,21 +24,16 @@ const param1 = {
 form.addEventListener('submit', onSubmit);
 
 function onSubmit(event) {
-  // console.dir(event);
-  // console.log(event);
   event.preventDefault();
   page = 1;
-  // console.log('gallery ', gallery, ', page ', page);
-  // console.log(event.currentTarget.searchQuery.value);
   gallery.innerHTML = '';
-  // console.log(event.currentTarget);
   searchTerm = event.currentTarget.searchQuery.value.trim().toLowerCase();
   if (searchTerm === '') {
     Notiflix.Notify.info('Enter your request, please!', param1);
     return;
   }
 
-  window.removeEventListener('scroll', nextPage);
+  // window.removeEventListener('scroll', nextPage);
 
   searchImg(searchTerm, page, perPage)
     .then(data => {
@@ -56,7 +51,7 @@ function onSubmit(event) {
       }
       if (data.totalHits > perPage) {
         btn.classList.remove('hidden');
-        window.addEventListener('scroll', nextPage);
+        // window.addEventListener('scroll', nextPage);
       }
     })
     .catch(onSearchError);
@@ -82,7 +77,7 @@ function clickLoadMore() {
           param1
         );
         btn.removeEventListener('click', clickLoadMore);
-        window.removeEventListener('scroll', nextPage);
+        // window.removeEventListener('scroll', nextPage);
       }
       onlightbox.refresh();
     })
