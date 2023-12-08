@@ -1,0 +1,62 @@
+aside {
+}
+
+.container-discount,
+.popular-section {
+  width: 335px;
+  margin: 0 auto;
+}
+
+.discount-title {
+  color: #010101;
+  text-align: left;
+  font-family: 'Neue Montreal', sans-serif;
+  font-style: normal;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.17;
+  padding-bottom: 16px;
+}
+
+.discount {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media screen and (max-width: 375px) {
+  .container-discount,
+  .popular-section {
+    width: 280px;
+    margin: 0 auto;
+  }
+}
+/* @media screen and (min-width: 375px) {
+	.container-discount {
+		width: 335px;
+		margin: 0 auto;
+	}
+} */
+@media screen and (min-width: 768px) {
+  .container-discount,
+  .popular-section {
+    width: 704px;
+    margin: 0 auto;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .container-discount,
+  .popular-section {
+    width: 1240px;
+    margin: 0 auto;
+    text-align: right;
+  }
+  .discount-title {
+    text-align: right;
+    /* привязать к основному контейнеру. */
+  }
+  .discount {
+    justify-content: right;
+  }
+}
