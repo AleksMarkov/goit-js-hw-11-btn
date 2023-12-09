@@ -7,6 +7,7 @@ const paramDiscount = {
   width: '400px',
   fontSize: '30px',
 };
+
 discount.innerHTML = '';
 getDiscountProducts()
   .then(data => {
@@ -24,9 +25,22 @@ document.addEventListener('click', function (event) {
   }
 });
 
+function onSearchError() {
+  Notiflix.Notify.failure(
+    'Something went wrong! Please try again.',
+    paramDiscount
+  );
+}
+
+function getRandomElements(array, count) {
+  const shuffledArray = array.slice().sort(() => Math.random() - 0.5);
+  return shuffledArray.slice(0, count);
+}
+
 function createMarkup(array) {
-  return array
-    .slice(0, 2)
+  const selectedElements = getRandomElements(array, 2);
+
+  return selectedElements
     .map(
       ({
         _id,
@@ -40,27 +54,26 @@ function createMarkup(array) {
       }) => {
         return `<li class="discount-card" data-product-id="${_id}">
             <div class="discount-img-wrap">
-			<svg class="discount-icon" width="60" height="60">
-				<use href="./icons.svg#icon-discount"></use>
-			</svg>
-                <a class="discount-gallery-link" href="#">
-                    <img src="${img}" alt="${name}" width="114" height="114" loading="lazy" />
-                </a>
-                <p class="discount-info-item">${name}</p>
-				<p class="discount-price-item">${price}</p>
-				<button class="add-cart-button">
-					<img src="cart_icon.png" alt="Add to Cart" />
+			  <div class="discount-top-section">
+               <a class="discount-gallery-link" href="#">
+                <img src="${img}" alt="${name}" width="114" height="114" loading="lazy" />
+               </a>
+			  </div>
+			  <div class="discount-product">
+              	<p class="discount-info-item">${name}</p>
+             	<p class="discount-price-item">${price}</p>
+             	<button class="add-cart-button">
+					<svg class="icon-button"width="18" height="18">
+		 			<use href="../../../icons.svg#icon-cart-mob" >
+		 			</use></svg>
 				</button>
+			  </div>
+				<svg class="discount-icon" width="60" height="60">
+                <use href="./icons.svg#icon-discount" alt="Discount"></use>
+                </svg>
             </div>
-        </li>`;
+          </li>`;
       }
     )
     .join('');
-}
-
-function onSearchError() {
-  Notiflix.Notify.failure(
-    'Something went wrong! Please try again.',
-    paramDiscount
-  );
 }
