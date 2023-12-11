@@ -1,27 +1,19 @@
 import { getPopularProducts } from '../../services/food-api';
-
+import { clickproduct } from '../../modals/modal-product/modal-product';
 const popular = document.querySelector('.popular-list');
-const paramDiscount = {
-  position: 'top-right',
-  timeout: 3000,
-  width: '400px',
-  fontSize: '30px',
-};
+
 let limit = 5;
 popular.innerHTML = '';
-getPopularProducts(limit)
-  .then(data => {
-    popular.innerHTML = createMarkup(data);
-  })
-  .catch(onSearchError);
+getPopularProducts(limit).then(data => {
+  popular.innerHTML = createMarkup(data);
+});
 
 document.addEventListener('click', function (event) {
-  const popularCard = event.target.closest('.popular-list');
+  const popularCard = event.target.closest('.popular-card');
   if (popularCard) {
     const productId = popularCard.dataset.productId;
-    // productId for call modal window
-    // window.location.href = `/products/${productId}`;
-    console.log('ID:', productId);
+    // console.log('ID:', productId);
+    clickproduct(productId);
   }
 });
 
@@ -42,35 +34,31 @@ function createMarkup(array) {
         return `<li class="popular-card" data-product-id="${_id}">
             <div class="popular-img-wrap">
                 <div class="popular-left-section">
-                    <a class="popular-gallery-link" href="#">
+                    <a class="popular-gallery-link" >
                         <img src="${img}" alt="${name}" width="56" height="56" loading="lazy" />
                     </a>
                 </div>
                 <div class="popular-center-section">
-                <p class="popular-info-item">${name}</p>
-                <p class="popular-category-item">Category: <span>${category.replace(
-                  '_',
-                  ' '
-                )}</span></p>
-                <p class="popular-size-item">Size:<span>${size}</span>Popularity:<span>${popularity}</span></p>
+					<div class="center-section-up">
+                		<p class="popular-info-item">${name}</p>
+						<button class="add-popular-button">
+							<svg class="popular-icon-button" width="12" height="12">
+		 					<use href="../../../icons.svg#icon-cart-mob" >
+		 					</use>
+							</svg>
+						</button>
+					</div>
+					<div class="center-section-down">
+                		<p class="popular-category-item">Category: <span>${category.replace(
+                      '_',
+                      ' '
+                    )}</span></p>
+                		<p class="popular-size-item">Size:<span>${size}</span>Popularity:<span>${popularity}</span></p>
+					</div>
 				</div>
-                <button class="add-popular-button">
-					<svg class="popular-icon-button" width="12" height="12">
-		 <use href="../../../icons.svg#icon-cart-mob" >
-		 </use></svg>
-				</button>
             </div>
         </li>`;
       }
     )
     .join('');
-}
-{
-  /* <p class="popular-category-item">Category:${category}</p>; */
-}
-function onSearchError() {
-  Notiflix.Notify.failure(
-    'Something went wrong! Please try again.',
-    paramDiscount
-  );
 }

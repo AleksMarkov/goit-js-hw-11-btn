@@ -1,6 +1,4 @@
-<section class="home-section">
-  <div class="container">
-    <load src="./home-content/main-content.html" />
-    <load src="./home-content/sidebar.html" />
-  </div>
-</section>;
+import './main-products/main-projects.js';
+import './main-products/pagination.js';
+import './popular-products/popular-products.js';
+import './discount-products/discount-products.js';
